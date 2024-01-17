@@ -1,0 +1,5 @@
+*** ARCANOID + VPS + DOCkERIZE ***
+** Docker-compose struct: **
+services:
+    game_server
+    nginx
