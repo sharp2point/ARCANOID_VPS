@@ -5,12 +5,4 @@ server{
     location / {
         proxy_pass http://game_server:3000;
     }
-    http {
-        server{
-            brotli on;
-            brotli_comp_level 4;
-            brotli_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
-    
-        }
-    }
 }
