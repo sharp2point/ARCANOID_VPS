@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import "dotenv/config"
 import Fastify from 'fastify'
 import fastifyStatic from '@fastify/static'
+import zlib from "node:zlib";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 console.log("PATH: ",path.join(__dirname, 'public'))
@@ -13,10 +14,11 @@ const fastify = Fastify({
 //-------------------------------------------
 const port = process.env.PORT;
 const host = process.env.HOST;
-
-console.log("HOST: ",host,":",port)
 //-------------------------------------------
-
+await fastify.register(
+  import('@fastify/compress'),
+  { global: true, encodings: ['deflate', 'gzip']  }
+)
 fastify.register(fastifyStatic, {
   root: path.join(__dirname, 'public'),
   prefix: '/public/', 
@@ -44,7 +46,21 @@ fastify.register(fastifyStatic, {
 });
 
 //------------------  http://localhost:3000 ------------------------>
-fastify.get('/', (request, reply) => {
+fastify.get('/', {
+  compress: {
+    inflateIfDeflated: false,
+    threshold: 128,
+    // zlibOptions: {
+    //   level: 4, // default is typically 6, max is 9, min is 0
+    // },
+    brotliOptions: {
+      params: {
+        [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT, // useful for APIs that primarily return text
+        [zlib.constants.BROTLI_PARAM_QUALITY]: 11, // default is 11, max is 11, min is 0
+      },
+    },
+  }
+}, (request, reply) => {
   reply.sendFile('index.html');
 });
 
