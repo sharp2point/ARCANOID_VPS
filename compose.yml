@@ -16,12 +16,12 @@ services:
     volumes:
       - /public:/public
   
-  nginx:
-    image: nginx:stable-alpine
-    container_name: game_nginx_arc
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf 
-    depends_on:
-      - game_server
+  # nginx:
+  #   image: nginx:stable-alpine
+  #   container_name: game_nginx_arc
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf 
+  #   depends_on:
+  #     - game_server
