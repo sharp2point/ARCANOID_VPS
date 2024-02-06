@@ -56,7 +56,7 @@ fastify.get('/', {
     brotliOptions: {
       params: {
         [zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT, // useful for APIs that primarily return text
-        [zlib.constants.BROTLI_PARAM_QUALITY]: 11, // default is 11, max is 11, min is 0
+        [zlib.constants.BROTLI_PARAM_QUALITY]: 6, // default is 11, max is 11, min is 0
       },
     },
   }
